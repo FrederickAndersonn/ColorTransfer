@@ -1,0 +1,33 @@
+import cv2
+import numpy as np
+
+# Bild laden
+image_path = "figures_ex5/yoshi.png"
+img = cv2.imread(image_path)
+
+# Breite, Höhe und Anzahl der Farbkanäle ausgeben
+height, width, channels = img.shape
+print(f"Breite: {width}, Höhe: {height}, Farbkanäle: {channels}")
+
+# Bilddatenformat auf Fließkomma ändern
+img_float = img.astype(np.float32)/255
+
+# Bild als uint8 anzeigen und warten, bis eine Taste gedrückt wird
+cv2.imshow("Originals", img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# Bild als Float anzeigen und warten, bis eine Taste gedrückt wird
+cv2.imshow("Float", img_float)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# Rotes Quadrat in die Mitte des Bildes einzeichnen
+center_x, center_y = width // 2, height // 2
+img = cv2.rectangle(img, (center_x - 5, center_y - 5), (center_x + 5, center_y + 5), (0, 0, 255), -1)
+
+# Jede 5. Zeile durch schwarze Pixel ersetzen
+img[::5, :] = 0
+
+# Bild auf der Festplatte speichern
+cv2.imwrite("output_image.png", img)
